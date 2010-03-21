@@ -524,7 +524,9 @@ class RESTServer {
         'DELETE' => 'delete',
       );
       if (isset($resource[$action_mapping[$method]])) {
-        return $resource[$action_mapping[$method]];
+        $controller = $resource[$action_mapping[$method]];
+        $controller['file'] = $resource['file'];
+        return $controller;
       }
     }
     // Detect relationship requests
