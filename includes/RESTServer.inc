@@ -87,8 +87,11 @@ class RESTServer {
       }
 
       // Get the best matching format, default to json
-      $mime = new Mimeparse();
-      $mime_type = $mime->best_match($mime_candidates, $_SERVER['HTTP_ACCEPT']);
+      if ($_SERVER['HTTP_ACCEPT']) {
+        $mime = new Mimeparse();
+        $mime_type = $mime->best_match($mime_candidates, $_SERVER['HTTP_ACCEPT']);
+      }
+
       if ($mime_type) {
         $response_format = $mime_map[$mime_type];
       }
@@ -96,7 +99,7 @@ class RESTServer {
         $response_format = 'json';
       }
     }
-
+    
     // Check if we support the response format and determine the mime type
     if (empty($mime_type) && !empty($response_format) && isset($formats[$response_format])) {
       $formatter = $formats[$response_format];
