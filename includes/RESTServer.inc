@@ -528,7 +528,9 @@ class RESTServer {
       );
       if (isset($resource[$action_mapping[$method]])) {
         $controller = $resource[$action_mapping[$method]];
-        $controller['file'] = $resource['file'];
+        if (isset($resource['file'])) {
+          $controller['file'] = $resource['file'];
+        }
         return $controller;
       }
     }
